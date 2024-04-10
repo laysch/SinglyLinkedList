@@ -1,0 +1,106 @@
+import java.util.Scanner;
+
+class Node {
+    int data;
+    Node next;
+
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+class SinglyLinkedList {
+    Node head;
+
+    SinglyLinkedList() {
+        this.head = null;
+    }
+
+    void insert(int data) {
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = newNode;
+        } else {
+            Node temp = head;
+            while (temp.next != null) {
+                temp = temp.next;
+            }
+            temp.next = newNode;
+        }
+    }
+
+    void display() {
+        Node temp = head;
+        while (temp != null) {
+            System.out.print(temp.data + " ");
+            temp = temp.next;
+        }
+        System.out.println();
+    }
+
+    int sum() {
+        int sum = 0;
+        Node temp = head;
+        while (temp != null) {
+            sum += temp.data;
+            temp = temp.next;
+        }
+        return sum;
+    }
+}
+
+public class Main {
+    static boolean isPrime(int num) {
+        if (num <= 1)
+            return false;
+        if (num <= 3)
+            return true;
+        if (num % 2 == 0 || num % 3 == 0)
+            return false;
+        for (int i = 5; i * i <= num; i = i + 6) {
+            if (num % i == 0 || num % (i + 2) == 0)
+                return false;
+        }
+        return true;
+    }
+
+    static boolean containsDigit3(int num) {
+        while (num != 0) {
+            if (num % 10 == 3)
+                return true;
+            num /= 10;
+        }
+        return false;
+    }
+
+    static SinglyLinkedList getPrimes(int n) {
+        SinglyLinkedList primesList = new SinglyLinkedList();
+        SinglyLinkedList primesWithDigit3List = new SinglyLinkedList();
+        for (int i = 0; i <= n; i++) {
+            if (isPrime(i)) {
+                primesList.insert(i);
+                if (containsDigit3(i)) {
+                    primesWithDigit3List.insert(i);
+                }
+            }
+        }
+        System.out.print("Prime Numbers: ");
+        primesList.display();
+        System.out.print("Prime Numbers with digit 3: ");
+        primesWithDigit3List.display();
+        System.out.println("Sum of prime numbers with digit 3: " + primesWithDigit3List.sum());
+        return primesWithDigit3List;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the value of n: ");
+        int n = scanner.nextInt();
+        if (n < 0 || n >= 1_000_000) {
+            System.out.println("Invalid input! Please enter a value less than 1,000,000.");
+            return;
+        }
+        getPrimes(n);
+    }
+}
