@@ -1,50 +1,50 @@
 import java.util.Scanner;
 
 class Node {
-    int data;
+    int value;
     Node next;
 
-    Node(int data) {
-        this.data = data;
+    Node(int value) {
+        this.value = value;
         this.next = null;
     }
 }
 
 class SinglyLinkedList {
-    Node head;
+    Node start;
 
     SinglyLinkedList() {
-        this.head = null;
+        this.start = null;
     }
 
-    void insert(int data) {
-        Node newNode = new Node(data);
-        if (head == null) {
-            head = newNode;
+    void add(int value) {
+        Node newNode = new Node(value);
+        if (start == null) {
+            start = newNode;
         } else {
-            Node temp = head;
-            while (temp.next != null) {
-                temp = temp.next;
+            Node current = start;
+            while (current.next != null) {
+                current = current.next;
             }
-            temp.next = newNode;
+            current.next = newNode;
         }
     }
 
     void display() {
-        Node temp = head;
-        while (temp != null) {
-            System.out.print(temp.data + " ");
-            temp = temp.next;
+        Node current = start;
+        while (current != null) {
+            System.out.print(current.value + " ");
+            current = current.next;
         }
         System.out.println();
     }
 
-    int sum() {
+    int total() {
         int sum = 0;
-        Node temp = head;
-        while (temp != null) {
-            sum += temp.data;
-            temp = temp.next;
+        Node current = start;
+        while (current != null) {
+            sum += current.value;
+            current = current.next;
         }
         return sum;
     }
@@ -65,7 +65,7 @@ public class Main {
         return true;
     }
 
-    static boolean containsDigit3(int num) {
+    static boolean containsDigitThree(int num) {
         while (num != 0) {
             if (num % 10 == 3)
                 return true;
@@ -74,33 +74,34 @@ public class Main {
         return false;
     }
 
-    static SinglyLinkedList getPrimes(int n) {
+    static SinglyLinkedList getPrimes(int limit) {
         SinglyLinkedList primesList = new SinglyLinkedList();
-        SinglyLinkedList primesWithDigit3List = new SinglyLinkedList();
-        for (int i = 0; i <= n; i++) {
+        SinglyLinkedList primesWithDigitThreeList = new SinglyLinkedList();
+        for (int i = 0; i <= limit; i++) {
             if (isPrime(i)) {
-                primesList.insert(i);
-                if (containsDigit3(i)) {
-                    primesWithDigit3List.insert(i);
+                primesList.add(i);
+                if (containsDigitThree(i)) {
+                    primesWithDigitThreeList.add(i);
                 }
             }
         }
         System.out.print("Prime Numbers: ");
         primesList.display();
         System.out.print("Prime Numbers with digit 3: ");
-        primesWithDigit3List.display();
-        System.out.println("Sum of prime numbers with digit 3: " + primesWithDigit3List.sum());
-        return primesWithDigit3List;
+        primesWithDigitThreeList.display();
+        System.out.println("Sum of prime numbers with digit 3: " + primesWithDigitThreeList.total());
+        return primesWithDigitThreeList;
     }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter the value of n: ");
-        int n = scanner.nextInt();
-        if (n < 0 || n >= 1_000_000) {
+        System.out.print("Enter the value of limit: ");
+        int limit = scanner.nextInt();
+        if (limit < 0 || limit >= 1_000_000) {
             System.out.println("Invalid input! Please enter a value less than 1,000,000.");
             return;
         }
-        getPrimes(n);
+        getPrimes(limit);
     }
 }
+
